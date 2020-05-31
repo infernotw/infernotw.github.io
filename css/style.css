@@ -1,0 +1,129 @@
+.table {
+   width: 750px;
+   margin: 0 auto;
+   border: 1px solid #000;
+   border-bottom: none;
+   position: relative;
+   margin-bottom: 20px;
+}
+
+.table-header {
+   text-align: center;
+}
+
+.table-string {
+   display: flex;
+   border-bottom: 1px solid #000;
+   text-align: center;
+   width: 100%;
+}
+
+.table-cell {
+   display: flex;
+   width: 100%;
+   border-right: 1px solid #000;
+}
+
+.table-header .table-cell {
+   cursor: pointer;
+}
+
+.table-header .table-cell:first-child {
+   cursor: default;
+}
+
+.table-cell:last-child {
+   border-right: none;
+}
+
+.table-cell span {
+   padding: 10px 10px;
+   width: 100%;
+}
+
+.pagination {
+   width: 350px;
+   margin: 0 auto;
+   text-align: center;
+}
+
+.buttons-wrapper {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.second {
+   background-color: orange;
+}
+
+.product-search {
+   text-align: center;
+   margin: 20px 0;
+}
+
+.input-search {
+   border-radius: 5px;
+   border: 1px solid #eaeaea;
+   padding: 8px 15px;
+   font-size: 14px;
+   width: 185px;
+}
+
+.table-header .down {
+   background-image: url("../img/arrow-up-black.svg");
+   background-repeat: no-repeat;
+   background-position: 130px;
+   background-size: 15px;
+}
+
+.table-header .up {
+   background-image: url("../img/arrow-down-black.svg");
+   background-repeat: no-repeat;
+   background-position: 130px;
+   background-size: 15px;
+}
+
+.popup-block {
+   width: 200px;
+   height: 200px;
+   position: absolute;
+   background: #808080;
+   border-radius: 10px;
+   left: 35%;
+   top: 25%;
+   text-align: center;
+}
+
+.popup-block .table-cell {
+   border-right: none;
+}
+
+.table-body .table-cell:last-child {
+   background-image: url("../img/burger.svg");
+   background-repeat: no-repeat;
+   background-position: 130px;
+   background-size: 15px;
+   cursor: pointer;
+}
+
+.error-block {
+   margin: 0 auto;
+   text-align: center;
+   border-bottom: 1px solid #000;
+}
+
+.error-text {
+   padding: 20px;
+   align-items: center;
+   display: flex;
+   justify-content: center;
+}
+
+.hidden {
+   display: none;
+}
+
+.visually-hidden {
+   visibility: hidden;
+}

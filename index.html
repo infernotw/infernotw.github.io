@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="css/style.css">
+   <title>Test ver.2</title>
+</head>
+
+<body>
+
+   <div class="product-search hidden">
+      <span class="product-text">Поиск:</span>
+      <input type="text" class="input-search" placeholder="Введите название продукта">
+   </div>
+
+   <div class="table">
+      <div class="popup-block hidden">
+         <div class="table-cell">
+            <span class="table-cell__id"></span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__name"></span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__price"></span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__shelf-life"></span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__market"></span>
+         </div>
+      </div>
+      <div class="table-header">
+         <div class="table-string">
+            <div class="table-cell">
+               <span class="table-cell__id">№</span>
+            </div>
+            <div class="table-cell">
+               <span class="table-cell__name def" value="productName">Название</span>
+            </div>
+            <div class="table-cell">
+               <span class="table-cell__price def" value="price">Цена</span>
+            </div>
+            <div class="table-cell">
+               <span class="table-cell__shelf-life def" value="shelfLife">Срок годности</span>
+            </div>
+            <div class="table-cell">
+               <span class="table-cell__market def" value="market">Магазин</span>
+            </div>
+         </div>
+      </div>
+      <div class="table-body"></div>
+      <div class="error-block hidden">
+         <span class="error-text">Не удалось получить данные</span>
+      </div>
+   </div>
+   <div class="pagination hidden">
+      <div class="pagination-text">Страницы:</div>
+
+      <div class="buttons-wrapper">
+         <button class="scroll scroll--prev-all" value="1">Prev.All</button>
+         <button class="scroll scroll--prev">Prev</button>
+         <button class="first" value="0">0</button>
+         <button class="second" value="1">1</button>
+         <button class="third" value="2">2</button>
+         <button class="scroll scroll--next" value="2">Next</button>
+         <button class="scroll scroll--next-all">Next.All</button>
+      </div>
+
+   </div>
+
+
+   <div class="hidden">
+      <div class="table-string">
+         <div class="table-cell">
+            <span class="table-cell__id">№</span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__name">Название</span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__price">Цена</span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__shelf-life">Срок годности</span>
+         </div>
+         <div class="table-cell">
+            <span class="table-cell__market">Магазин</span>
+         </div>
+      </div>
+   </div>
+
+   </div>
+
+   <script src="js/script.js"></script>
+</body>
+
+</html>
