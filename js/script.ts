@@ -1,25 +1,6 @@
+import { IConsts, IJsonElem, IPageObj } from './ITable';
+
 (() => {
-   interface IConsts {
-      url: string;
-      defState: string;
-      rubles: string;
-      arrLength: number;
-      searchLetter: number;
-      enterKeycode: number;
-   }
-
-   interface IJsonElem {
-      id: number;
-      productName: string;
-      price: number;
-      shelfLife: string;
-      market: string;
-   }
-
-   interface IPageObj {
-      [index: string]: IJsonElem[];
-   };
-
    const CONSTANTS: IConsts = {
       url: 'https://infernotw.github.io/table.json',
       defState: 'defState',
@@ -36,138 +17,161 @@
        * @private
        */
       private _header: HTMLElement = document.querySelector('.table-header');
+
       /**
        * тело табилцы
        * @type {HTMLElement} _body
        * @private
        */
       private _body: HTMLElement = document.querySelector('.table-body');
+
       /**
        * пагинация
        * @type {HTMLElement} _pagination
        * @private
        */
       private _pagination: HTMLElement = document.querySelector('.pagination');
+
       /**
        * врапер кнопок пагинации
        * @type {HTMLElement} _pageNumbers
        * @private
        */
       private _pageNumbers: HTMLElement = this._pagination.querySelector('.buttons-wrapper');
+
       /**
        * темплейт строки таблицы
        * @type {HTMLElement} _tableStrTemplate
        * @private
        */
       private _tableStrTemplate: HTMLElement = document.querySelector('.table-string');
+
       /**
        * первая кнопка пагинации
        * @type {HTMLButtonElement} _pagBtnFirst
        * @private
        */
       private _pagBtnFirst: HTMLButtonElement = this._pageNumbers.querySelector('.first');
+
       /**
        * вторая кнопка пагинации
        * @type {HTMLButtonElement} _pagBtnSecond
        * @private
        */
       private _pagBtnSecond: HTMLButtonElement = this._pageNumbers.querySelector('.second');
+
       /**
        * третья кнопка пагинации
        * @type {HTMLButtonElement} _pagBtnThird
        * @private
        */
       private _pagBtnThird: HTMLButtonElement = this._pageNumbers.querySelector('.third');
+
       /**
        * кнопка перехода к предыдущей странице
        * @type {HTMLButtonElement} _btnPrev
        * @private
        */
       private _btnPrev: HTMLButtonElement = this._pageNumbers.querySelector('.scroll--prev');
+
       /**
        * кнопка перехода к первой странице
        * @type {HTMLButtonElement} _btnPrevAll
        * @private
        */
       private _btnPrevAll: HTMLButtonElement = this._pageNumbers.querySelector('.scroll--prev-all');
+
       /**
        * кнопка перехода к следующей странице
        * @type {HTMLButtonElement} _btnNext
        * @private
        */
       private _btnNext: HTMLButtonElement = this._pageNumbers.querySelector('.scroll--next');
+
       /**
        * кнопка перехода к последней странице
        * @type {HTMLButtonElement} _btnNextAll
        * @private
        */
       private _btnNextAll: HTMLButtonElement = this._pageNumbers.querySelector('.scroll--next-all');
+
       /**
        * блок поиска
        * @type {HTMLElement} _searchBlock
        * @private
        */
       private _searchBlock: HTMLElement = document.querySelector('.product-search');
+
       /**
        * инпут поиска
        * @type {HTMLInputElement} _searchInput
        * @private
        */
       private _searchInput: HTMLInputElement = this._searchBlock.querySelector('.input-search');
+
       /**
        * ячейки шапки таблицы
        * @type {HTMLElement} _headerCells
        * @private
        */
       private _headerCells: HTMLElement = this._header.querySelector('.table-string');
+
       /**
        * блок дополнительной информации
        * @type {HTMLElement} _popupBlock
        * @private
        */
       private _popupBlock: HTMLElement = document.querySelector('.popup-block');
+
       /**
        * блок ошибки загрузки данных
        * @type {HTMLElement} _errorBlock
        * @private
        */
       private _errorBlock: HTMLElement = document.querySelector('.error-block');
+
       /**
        * объект с массивами данных на все страницы
        * @type {HTMLElement} _pageDataObj
        * @private
        */
-      private _pageDataObj: IPageObj;
+      private _pageDataObj: IPageObj = {};
+
       /**
        * номер страницы
        * @type {number} _page
        * @private
        */
       private _page: number = 0;
+
       /**
        * тип сортировки
        * @type {string|boolean} _sortUp
        * @private
        */
-      private _sortUp: string | boolean = CONSTANTS.defState;;
+      private _sortUp: string | boolean = CONSTANTS.defState;
+
       /**
        * исходный массив
        * @type {Array} _sourceData
        * @private
        */
       private _sourceData: IJsonElem[];
+
       /**
        * полученный массив
        * @type {Array} _sourceData
        * @private
        */
       private _currentArr: IJsonElem[];
+
       /**
        * номер последней страницы
        * @type {number} _lastPage
        * @private
        */
       private _lastPage: number;
+
       /**
        * сортируемый столбик
        * @type {HTMLElement} _sortedColumn
@@ -176,8 +180,6 @@
       private _sortedColumn: HTMLElement;
 
       constructor() {
-         this._pageDataObj = {};
-
          this._initJson();
          this._initEvents();
       }
@@ -311,7 +313,7 @@
 
       /**
        * поиск
-       * @param {KeyboardEvent} evt
+       * @param {Event} evt
        * @private
        * @returns {void|Function} 
        * 
@@ -345,7 +347,7 @@
                this._pagination.classList.remove('visually-hidden');
 
                // задаю значения кнопке быстрого перемещения к последней странице
-               this._btnNextAll.value = `${this._lastPage + 1} `;
+               this._btnNextAll.value = `${this._lastPage + 1}`;
 
                return this._fillTableBody();
             }
@@ -369,7 +371,7 @@
             // если страница одна или данных нет, то скрываю пагинацию
             this._pagination.classList.toggle('visually-hidden', hasMore);
 
-            this._btnNextAll.value = `${this._lastPage + 1} `;
+            this._btnNextAll.value = `${this._lastPage + 1}`;
 
             return this._fillTableBody();
          }
@@ -437,7 +439,7 @@
       private _getFormattedDate(dateString: string): Date {
          const
             dateArr: string[] = dateString.split('.'),
-            date = `${dateArr[1]}.${dateArr[0]}.${dateArr[2]} `;
+            date = `${dateArr[1]}.${dateArr[0]}.${dateArr[2]}`;
 
          return new Date(date);
       }
@@ -603,7 +605,7 @@
                // к первой странице
                this._btnPrevAll.value = '1';
                // к последней странице
-               this._btnNextAll.value = `${this._lastPage + 1} `;
+               this._btnNextAll.value = `${this._lastPage + 1}`;
             }).catch(() => {
                this._errorBlock.classList.remove('hidden');
             });
