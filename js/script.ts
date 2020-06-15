@@ -1,11 +1,19 @@
 import { IConsts, IJsonElem, IPageObj } from './ITable';
 
 (() => {
+   /**
+    * @see
+    * используется два класса 'visually-hidden' и 'hidden'
+    * 'visually-hidden' - делает блок невидимым с сохранением места для элемента,
+    * это необходимо для скрытия кнопок пагинации
+    * 'hidden' - скрывает блок полностью, необходим для скрытия всплывающего окна
+    * Так как это не сборка, то нужен JS, чтобы .io не падало, и TS - для ревью    * 
+    */
+
    const CONSTANTS: IConsts = {
-      url: 'https://infernotw.github.io/table.json',
+      url: 'https://infernotw.github.io/',
       defState: 'defState',
       rubles: ' ₽',
-      arrLength: 10,
       searchLetter: 2,
       enterKeycode: 13
    };
@@ -19,7 +27,7 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       private _header: HTMLElement = document.querySelector('.table-header');
 
       /**
-       * тело табилцы
+       * тело таблицы
        * @type {HTMLElement} _body
        * @private
        */
@@ -179,8 +187,26 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
        */
       private _sortedColumn: HTMLElement;
 
+      /**
+       * кнопки выбора размера отображения таблицы
+       * @type {HTMLElement} _buttonSelect
+       * @public
+       */
+      public buttonSelect: HTMLSelectElement = document.querySelector('select');
+
+      /**
+       * размер массива, отображаемого на странице
+       * @type {string} _arrLength
+       * @public
+       */
+      public arrLength: string = this.buttonSelect.value;
+
+      public dataSelect: HTMLElement = document.querySelector('.change-json');
+
+      public dataJsonId: string = 'table';
+
       constructor() {
-         this._initJson();
+         this._initJson(this.dataJsonId);
          this._initEvents();
       }
 
@@ -194,9 +220,9 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       private _getTablePages(jsonData: IJsonElem[]): boolean | void {
          let
             pageArr: IJsonElem[] = [],
-            pageNumber: string,
-            index: string,
             isLastPage: boolean;
+
+         let pageNumber = 0;
 
          // если длина пришедшего массива данных равно нулю, то возвращаю false
          if (!jsonData.length) {
@@ -212,21 +238,18 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
 
             // если длина полученного массива равна условию отображения данных на одной странице
             // или индекс равен длине пришедшего массива, то записываю массив в объект и обнуляю этот массив
-            if (pageArr.length === CONSTANTS.arrLength || isLastPage) {
-               index = i.toString();
+            if (pageArr.length === parseInt(this.arrLength) || isLastPage) {
+               // записываю массив в объект под номером страницы
+               this._pageDataObj[pageNumber] = pageArr;
 
-               // если длина индекса больше 1, то режу массив для получения номера массива объекта
-               // номер массива объекта равен: (длина строки индекса - 1)
-               // если меньше, то это нулевой массив объекта
-               pageNumber = index.length > 1 ? index.slice(0, index.length - 1) : '0';
+               // увеличиваю номер страницы после записи в объект
+               pageNumber++;
 
                // если страница последняя, то записываю номер страницы в переменную
                if (isLastPage) {
-                  this._lastPage = parseInt(pageNumber);
+                  this._lastPage = pageNumber - 1;
                }
 
-               // записываю массив в объект под номером страницы
-               this._pageDataObj[pageNumber] = pageArr;
                // обнуляю полученный массив
                pageArr = [];
             }
@@ -270,6 +293,23 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       }
 
       /**
+       * выбор размера отображения 
+       * @param {Event} evt 
+       * @private
+       */
+      private _selectTableSize(evt: Event): void {
+         const
+            target = evt.target as HTMLInputElement,
+            data = this._searchInput.value ? this._currentArr : this._sourceData;
+
+         this.arrLength = target.value;
+         this._getTablePages(data);
+         this._changePage(1);
+         this._btnNextAll.value = `${this._lastPage + 1}`;
+         this._fillTableBody();
+      }
+
+      /**
        * пагинация
        * @param {number} pageNumber переданный номер страницы
        * @private
@@ -288,8 +328,8 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
 
          // задаю значения и отображаемый текст кнопкам с номерами страниц
          // первая кнопка
-         this._pagBtnFirst.value = `${pageNumber - 1}`;
-         this._pagBtnFirst.innerText = `${pageNumber - 1}`;
+         this._pagBtnFirst.value = `${newPage}`;
+         this._pagBtnFirst.innerText = `${newPage}`;
 
          // вторая кнопка
          this._pagBtnSecond.value = `${pageNumber}`;
@@ -303,10 +343,10 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
          // к следующей странице
          this._btnNext.value = `${pageNumber + 1}`;
          // к предыдущей странице
-         this._btnPrev.value = `${pageNumber - 1}`;
+         this._btnPrev.value = `${newPage}`;
 
          // задаю номер текущей страницы
-         this._page = pageNumber - 1;
+         this._page = newPage;
 
          this._fillTableBody();
       }
@@ -392,6 +432,7 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
             let
                aValue = a[value],
                bValue = b[value];
+            // при компиляции выдает ошибку, фиксится QuickFix'ом
             const isFiniteNumber = Number.isFinite(aValue);
 
             // если сортировка по дате
@@ -554,6 +595,16 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
          (isPrev ? this._btnPrevAll : this._btnNextAll).classList.toggle('visually-hidden', isToggle);
       }
 
+      public updateData(evt: Event): void {
+         const
+            value = (evt.target as HTMLInputElement).value.toLowerCase(),
+            id = value;
+
+         this._body.innerHTML = '';
+         this._errorBlock.classList.add('hidden');
+         this._initJson(id);
+      }
+
       /**
        * инициализация иветов
        * @private
@@ -578,6 +629,8 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
          });
          this._headerCells.addEventListener('mousedown', this._tableSortBy.bind(this));
          document.addEventListener('click', this._showPopup.bind(this));
+         this.buttonSelect.addEventListener('change', this._selectTableSize.bind(this));
+         this.dataSelect.addEventListener('change', this.updateData.bind(this));
       }
 
       /**
@@ -585,8 +638,10 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
        * @private
        * @returns {void}
        */
-      private _initJson(): void {
-         fetch(CONSTANTS.url).then(ans => {
+      private _initJson(id: string): void {
+         const urlData: string = `${CONSTANTS.url + id + '.json'}`;
+
+         fetch(urlData).then(ans => {
             const data = ans.json();
 
             data.then(dataArr => {

@@ -2,7 +2,7 @@ export interface IConsts {
    url: string;
    defState: string;
    rubles: string;
-   arrLength: number;
+   // arrLength: number;
    searchLetter: number;
    enterKeycode: number;
 }

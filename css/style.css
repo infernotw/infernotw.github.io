@@ -4,7 +4,7 @@
    border: 1px solid #000;
    border-bottom: none;
    position: relative;
-   margin-bottom: 20px;
+   margin-bottom: 10px;
 }
 
 .table-header {
@@ -47,6 +47,10 @@
    text-align: center;
 }
 
+.pagination-text {
+   margin-bottom: 10px;
+}
+
 .buttons-wrapper {
    display: flex;
    justify-content: space-between;
@@ -59,7 +63,7 @@
 
 .product-search {
    text-align: center;
-   margin: 20px 0;
+   margin: 10px 0;
 }
 
 .input-search {
@@ -68,6 +72,16 @@
    padding: 8px 15px;
    font-size: 14px;
    width: 185px;
+}
+
+.change-size {
+   display: flex;
+   justify-content: center;
+   margin-bottom: 10px;
+}
+
+.menu-text {
+   margin-right: 5px;
 }
 
 .table-header .down {
