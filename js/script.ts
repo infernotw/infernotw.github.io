@@ -593,8 +593,11 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
       public updateData(url: string): void {
          this._initJson(url);
          this._searchInput.value = '';
-         this._resetSort(true); 
-         this._sortedColumn = null;        
+
+         if (!!(this._sortUp !== CONSTANTS.defState)) {
+            this._resetSort(true);
+            this._sortedColumn = null;
+         }
       }
 
       /**

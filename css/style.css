@@ -74,10 +74,17 @@
    width: 185px;
 }
 
-.change-size {
+.changes {
+   width: 750px;
+   margin: 0 auto;
    display: flex;
-   justify-content: center;
    margin-bottom: 10px;
+   justify-content: space-between;
+}
+
+.change-size,
+.change-data {
+   display: flex;
 }
 
 .menu-text {

@@ -15,16 +15,28 @@
       <input type="text" class="input-search" placeholder="Введите название продукта">
    </div>
 
-   <div class="change-size">
-      <div class="menu-text">Выбор размера отображения:</div>
-      <select name="change-size">
-         <option value="3">3</option>
-         <option value="5">5</option>
-         <option value="7">7</option>
-         <option value="10" selected>10</option>
-         <option value="15">15</option>
-      </select>
+   <div class="changes">
+      <div class="change-size">
+         <div class="menu-text">Выбор размера отображения:</div>
+         <select name="change-size">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+         </select>
+      </div>
+
+      <div class="change-data">
+         <div class="menu-text">Выбор базы данных:</div>
+         <select name="change-json">
+            <option value="table" selected>table</option>
+            <option value="table1">table2</option>
+            <option value="error">error</option>
+         </select>
+      </div>
    </div>
+
 
    <div class="table">
       <div class="popup-block hidden">
@@ -101,16 +113,6 @@
          </div>
       </div>
    </div>
-
-   <div class="change-data">
-      <div class="menu-text">Выбор базы данных:</div>
-      <select name="change-json">
-         <option value="table" selected>table</option>
-         <option value="table1">table2</option>
-         <option value="error">error</option>
-      </select>
-   </div>
-
    <script src="js/script.js"></script>
 </body>
 
