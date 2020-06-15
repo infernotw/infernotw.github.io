@@ -12,6 +12,7 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
 
    const CONSTANTS: IConsts = {
       url: 'https://infernotw.github.io/',
+      urlJson: '.json',
       defState: 'defState',
       rubles: ' ₽',
       searchLetter: 2,
@@ -188,25 +189,14 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       private _sortedColumn: HTMLElement;
 
       /**
-       * кнопки выбора размера отображения таблицы
-       * @type {HTMLElement} _buttonSelect
-       * @public
-       */
-      public buttonSelect: HTMLSelectElement = document.querySelector('select');
-
-      /**
        * размер массива, отображаемого на странице
        * @type {string} _arrLength
-       * @public
+       * @private
        */
-      public arrLength: string = this.buttonSelect.value;
+      private _arrLength: string = '10';
 
-      public dataSelect: HTMLElement = document.querySelector('.change-json');
-
-      public dataJsonId: string = 'table';
-
-      constructor() {
-         this._initJson(this.dataJsonId);
+      constructor(url: string) {
+         this._initJson(url);
          this._initEvents();
       }
 
@@ -238,7 +228,7 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
 
             // если длина полученного массива равна условию отображения данных на одной странице
             // или индекс равен длине пришедшего массива, то записываю массив в объект и обнуляю этот массив
-            if (pageArr.length === parseInt(this.arrLength) || isLastPage) {
+            if (pageArr.length === parseInt(this._arrLength) || isLastPage) {
                // записываю массив в объект под номером страницы
                this._pageDataObj[pageNumber] = pageArr;
 
@@ -295,14 +285,12 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       /**
        * выбор размера отображения 
        * @param {Event} evt 
-       * @private
+       * @public
        */
-      private _selectTableSize(evt: Event): void {
-         const
-            target = evt.target as HTMLInputElement,
-            data = this._searchInput.value ? this._currentArr : this._sourceData;
+      public selectTableSize(arrLength: string): void {
+         const data = this._searchInput.value ? this._currentArr : this._sourceData;
 
-         this.arrLength = target.value;
+         this._arrLength = arrLength;
          this._getTablePages(data);
          this._changePage(1);
          this._btnNextAll.value = `${this._lastPage + 1}`;
@@ -595,14 +583,8 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
          (isPrev ? this._btnPrevAll : this._btnNextAll).classList.toggle('visually-hidden', isToggle);
       }
 
-      public updateData(evt: Event): void {
-         const
-            value = (evt.target as HTMLInputElement).value.toLowerCase(),
-            id = value;
-
-         this._body.innerHTML = '';
-         this._errorBlock.classList.add('hidden');
-         this._initJson(id);
+      public updateData(url: string): void {
+         this._initJson(url);
       }
 
       /**
@@ -629,8 +611,6 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
          });
          this._headerCells.addEventListener('mousedown', this._tableSortBy.bind(this));
          document.addEventListener('click', this._showPopup.bind(this));
-         this.buttonSelect.addEventListener('change', this._selectTableSize.bind(this));
-         this.dataSelect.addEventListener('change', this.updateData.bind(this));
       }
 
       /**
@@ -638,10 +618,8 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
        * @private
        * @returns {void}
        */
-      private _initJson(id: string): void {
-         const urlData: string = `${CONSTANTS.url + id + '.json'}`;
-
-         fetch(urlData).then(ans => {
+      private _initJson(url: string): void {
+         fetch(url).then(ans => {
             const data = ans.json();
 
             data.then(dataArr => {
@@ -661,14 +639,38 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
                this._btnPrevAll.value = '1';
                // к последней странице
                this._btnNextAll.value = `${this._lastPage + 1}`;
+
+               this._errorBlock.classList.add('hidden');
             }).catch(() => {
                this._errorBlock.classList.remove('hidden');
+               this._body.innerHTML = '';
             });
          }).catch(() => {
             this._errorBlock.classList.remove('hidden');
+            this._body.innerHTML = '';
          });
       }
    }
 
-   new Table();
+   const tableArea = new Table('https://infernotw.github.io/table.json');
+
+   const
+      selectData: HTMLSelectElement = document.querySelector('.change-json'),
+      selectArrLength: HTMLSelectElement = document.querySelector('.change-size');
+
+   selectData.addEventListener('change', (evt: Event) => {
+      const
+         value = (evt.target as HTMLInputElement).value,
+         url = CONSTANTS.url + value + CONSTANTS.urlJson;
+
+      tableArea.updateData(url);
+   });
+
+   selectArrLength.addEventListener('change', (evt: Event) => {
+      const
+         value = (evt.target as HTMLInputElement).value,
+         arrLength = value;
+
+      tableArea.selectTableSize(arrLength);
+   });
 })();

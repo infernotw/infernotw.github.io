@@ -1,8 +1,8 @@
 export interface IConsts {
    url: string;
+   urlJson: string;
    defState: string;
    rubles: string;
-   // arrLength: number;
    searchLetter: number;
    enterKeycode: number;
 }
