@@ -1,0 +1,184 @@
+[
+    {
+        "id": 1,
+        "productName": "Абрикосы",
+        "price": 600,
+        "shelfLife": "10.03.2020",
+        "market": "WALMART"
+    },
+    {
+        "id": 2,
+        "productName": "Кокос",
+        "price": 100,
+        "shelfLife": "09.03.2020",
+        "market": "SPAR"
+    },
+    {
+        "id": 3,
+        "productName": "Руккола",
+        "price": 230,
+        "shelfLife": "12.05.2020",
+        "market": "Пятерочка"
+    },
+    {
+        "id": 4,
+        "productName": "Мандарины",
+        "price": 260,
+        "shelfLife": "05.03.2020",
+        "market": "Лента"
+    },
+    {
+        "id": 5,
+        "productName": "Апельсины",
+        "price": 130,
+        "shelfLife": "11.03.2020",
+        "market": "ОКЕЙ"
+    },
+    {
+        "id": 6,
+        "productName": "Груша",
+        "price": 800,
+        "shelfLife": "04.03.2020",
+        "market": "Пловдив"
+    },
+    {
+        "id": 7,
+        "productName": "Качан капусты",
+        "price": 9000,
+        "shelfLife": "08.04.2020",
+        "market": "Дикси"
+    },
+    {
+        "id": 8,
+        "productName": "Смола",
+        "price": 5,
+        "shelfLife": "10.10.2020",
+        "market": "PRISMA"
+    },
+    {
+        "id": 9,
+        "productName": "Греча",
+        "price": 70,
+        "shelfLife": "02.12.2020",
+        "market": "Лента"
+    },
+    {
+        "id": 10,
+        "productName": "Рис",
+        "price": 900,
+        "shelfLife": "15.03.2020",
+        "market": "Пятерочка"
+    },
+    {
+        "id": 11,
+        "productName": "Масло",
+        "price": 150,
+        "shelfLife": "15.03.2021",
+        "market": "Пловдив"
+    },
+    {
+        "id": 12,
+        "productName": "Наггетсы",
+        "price": 350,
+        "shelfLife": "21.03.2020",
+        "market": "Лента"
+    },
+    {
+        "id": 13,
+        "productName": "Продукт13",
+        "price": 363,
+        "shelfLife": "22.03.2020",
+        "market": "Пловдив"
+    },
+    {
+        "id": 14,
+        "productName": "Продукт14",
+        "price": 374,
+        "shelfLife": "23.03.2020",
+        "market": "Лента"
+    },
+    {
+        "id": 15,
+        "productName": "Продукт15",
+        "price": 385,
+        "shelfLife": "24.03.2020",
+        "market": "SPAR"
+    },
+    {
+        "id": 16,
+        "productName": "Продукт16",
+        "price": 396,
+        "shelfLife": "25.03.2020",
+        "market": "ОКЕЙ"
+    },
+    {
+        "id": 17,
+        "productName": "Продукт17",
+        "price": 407,
+        "shelfLife": "26.03.2020",
+        "market": "Пятерочка"
+    },
+    {
+        "id": 18,
+        "productName": "Продукт18",
+        "price": 418,
+        "shelfLife": "27.03.2020",
+        "market": "Лента"
+    },
+    {
+        "id": 19,
+        "productName": "Продукт19",
+        "price": 429,
+        "shelfLife": "28.03.2020",
+        "market": "PRISMA"
+    },
+    {
+        "id": 20,
+        "productName": "Продукт20",
+        "price": 302,
+        "shelfLife": "29.03.2020",
+        "market": "Семья"
+    },
+    {
+        "id": 21,
+        "productName": "Продукт21",
+        "price": 1,
+        "shelfLife": "30.03.2020",
+        "market": "Лента"
+    },
+    {
+        "id": 22,
+        "productName": "Продукт22",
+        "price": 42,
+        "shelfLife": "31.03.2020",
+        "market": "PRISMA"
+    },
+    {
+        "id": 23,
+        "productName": "Продукт23",
+        "price": 89,
+        "shelfLife": "01.04.2020",
+        "market": "Перекресток"
+    },
+    {
+        "id": 24,
+        "productName": "Продукт24",
+        "price": 123,
+        "shelfLife": "02.04.2020",
+        "market": "Семья"
+    },
+    {
+        "id": 25,
+        "productName": "Продукт25",
+        "price": 95,
+        "shelfLife": "03.04.2020",
+        "market": "Пятерочка"
+    },
+    {
+        "id": 26,
+        "productName": "Продукт26",
+        "price": 12,
+        "shelfLife": "04.04.2020",
+        "market": "ОКЕЙ"
+    }
+]
