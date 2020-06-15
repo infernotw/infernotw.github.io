@@ -21,11 +21,8 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
    };
 
    const
-      data: HTMLElement = document.querySelector('.change-data'),
-      arrLength: HTMLElement = document.querySelector('.change-size'),
-      selectData: HTMLSelectElement = data.querySelector('select'),
-      selectLength: HTMLSelectElement = arrLength.querySelector('select');
-
+      dataChanger: HTMLSelectElement = document.querySelector('.data-changer'),
+      sizeChanger: HTMLSelectElement = document.querySelector('.size-changer');
    class Table {
       /**
        * шапка таблицы
@@ -218,9 +215,8 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
       private _getTablePages(jsonData: IJsonElem[]): boolean | void {
          let
             pageArr: IJsonElem[] = [],
-            isLastPage: boolean;
-
-         let pageNumber = 0;
+            isLastPage: boolean,
+            pageNumber = 0;
 
          // если длина пришедшего массива данных равно нулю, то возвращаю false
          if (!jsonData.length) {
@@ -428,7 +424,7 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
             let
                aValue = a[value],
                bValue = b[value];
-            // при компиляции выдает ошибку, фиксится QuickFix'ом
+            // при компиляции выдает ошибку, TS не в курсе про isFinite
             const isFiniteNumber = Number.isFinite(aValue);
 
             // если сортировка по дате
@@ -596,14 +592,14 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
        * @param {string} url ссылка на БД
        * @public
        */
-      public updateData(url: string): void {         
+      public updateData(url: string): void {
          this._changePage(1);
          this._searchInput.value = '';
          this._pagination.classList.remove('visually-hidden');
          this._initJson(url);
 
 
-         if (!!(this._sortUp !== CONSTANTS.defState)) {
+         if (this._sortUp !== CONSTANTS.defState) {
             this._resetSort(true);
             this._sortedColumn = null;
          }
@@ -673,7 +669,7 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
          }).catch(() => {
             this._errorBlock.classList.remove('hidden');
             this._searchBlock.classList.add('hidden');
-               this._pagination.classList.add('hidden');
+            this._pagination.classList.add('hidden');
             this._body.innerHTML = '';
             this._sourceData = [];
          });
@@ -685,7 +681,7 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
       countAtPage: '10'
    });
 
-   selectData.addEventListener('change', (evt: Event) => {
+   dataChanger.addEventListener('change', (evt: Event) => {
       evt.stopPropagation();
 
       const url = CONSTANTS.url + (evt.target as HTMLInputElement).value + CONSTANTS.urlJson;
@@ -693,7 +689,7 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
       tableArea.updateData(url);
    });
 
-   selectLength.addEventListener('change', (evt: Event) => {
+   sizeChanger.addEventListener('change', (evt: Event) => {
       evt.stopPropagation();
 
       tableArea.selectTableSize((evt.target as HTMLInputElement).value);
