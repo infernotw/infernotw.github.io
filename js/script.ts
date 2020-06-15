@@ -20,6 +20,12 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
       countAtPage: '10'
    };
 
+   const
+      data: HTMLElement = document.querySelector('.change-data'),
+      arrLength: HTMLElement = document.querySelector('.change-size'),
+      selectData: HTMLSelectElement = data.querySelector('select'),
+      selectLength: HTMLSelectElement = arrLength.querySelector('select');
+
    class Table {
       /**
        * шапка таблицы
@@ -293,8 +299,8 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
          const data = this._searchInput.value ? this._currentArr : this._sourceData;
 
          this._arrLength = arrLength;
-         this._getTablePages(data);
          this._changePage(1);
+         this._getTablePages(data);
          this._btnNextAll.value = `${this._lastPage + 1}`;
          this._fillTableBody();
       }
@@ -590,9 +596,12 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
        * @param {string} url ссылка на БД
        * @public
        */
-      public updateData(url: string): void {
-         this._initJson(url);
+      public updateData(url: string): void {         
+         this._changePage(1);
          this._searchInput.value = '';
+         this._pagination.classList.remove('visually-hidden');
+         this._initJson(url);
+
 
          if (!!(this._sortUp !== CONSTANTS.defState)) {
             this._resetSort(true);
@@ -656,11 +665,17 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
                this._errorBlock.classList.add('hidden');
             }).catch(() => {
                this._errorBlock.classList.remove('hidden');
+               this._searchBlock.classList.add('hidden');
+               this._pagination.classList.add('hidden');
                this._body.innerHTML = '';
+               this._sourceData = [];
             });
          }).catch(() => {
             this._errorBlock.classList.remove('hidden');
+            this._searchBlock.classList.add('hidden');
+               this._pagination.classList.add('hidden');
             this._body.innerHTML = '';
+            this._sourceData = [];
          });
       }
    }
@@ -669,12 +684,6 @@ import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
       url: CONSTANTS.url + 'table' + CONSTANTS.urlJson,
       countAtPage: '10'
    });
-
-   const
-      data: HTMLElement = document.querySelector('.change-data'),
-      arrLength: HTMLElement = document.querySelector('.change-size'),
-      selectData: HTMLSelectElement = data.querySelector('select'),
-      selectLength: HTMLSelectElement = arrLength.querySelector('select');
 
    selectData.addEventListener('change', (evt: Event) => {
       evt.stopPropagation();
