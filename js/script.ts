@@ -1,4 +1,4 @@
-import { IConsts, IJsonElem, IPageObj } from './ITable';
+import { IConsts, IJsonElem, IPageObj, IOptions } from './ITable';
 
 (() => {
    /**
@@ -16,7 +16,8 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       defState: 'defState',
       rubles: ' ₽',
       searchLetter: 2,
-      enterKeycode: 13
+      enterKeycode: 13,
+      countAtPage: '10'
    };
 
    class Table {
@@ -193,10 +194,11 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
        * @type {string} _arrLength
        * @private
        */
-      private _arrLength: string = '10';
+      private _arrLength: string;
 
-      constructor(url: string) {
-         this._initJson(url);
+      constructor(options: IOptions) {
+         this._arrLength = options.countAtPage.toString() || CONSTANTS.countAtPage;
+         this._initJson(options.url);
          this._initEvents();
       }
 
@@ -583,8 +585,16 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
          (isPrev ? this._btnPrevAll : this._btnNextAll).classList.toggle('visually-hidden', isToggle);
       }
 
+      /**
+       * обновление БД для отрисовки на странице
+       * @param {string} url ссылка на БД
+       * @public
+       */
       public updateData(url: string): void {
          this._initJson(url);
+         this._searchInput.value = '';
+         this._resetSort(true); 
+         this._sortedColumn = null;        
       }
 
       /**
@@ -652,25 +662,28 @@ import { IConsts, IJsonElem, IPageObj } from './ITable';
       }
    }
 
-   const tableArea = new Table('https://infernotw.github.io/table.json');
+   const tableArea = new Table({
+      url: CONSTANTS.url + 'table' + CONSTANTS.urlJson,
+      countAtPage: '10'
+   });
 
    const
-      selectData: HTMLSelectElement = document.querySelector('.change-json'),
-      selectArrLength: HTMLSelectElement = document.querySelector('.change-size');
+      data: HTMLElement = document.querySelector('.change-data'),
+      arrLength: HTMLElement = document.querySelector('.change-size'),
+      selectData: HTMLSelectElement = data.querySelector('select'),
+      selectLength: HTMLSelectElement = arrLength.querySelector('select');
 
    selectData.addEventListener('change', (evt: Event) => {
-      const
-         value = (evt.target as HTMLInputElement).value,
-         url = CONSTANTS.url + value + CONSTANTS.urlJson;
+      evt.stopPropagation();
+
+      const url = CONSTANTS.url + (evt.target as HTMLInputElement).value + CONSTANTS.urlJson;
 
       tableArea.updateData(url);
    });
 
-   selectArrLength.addEventListener('change', (evt: Event) => {
-      const
-         value = (evt.target as HTMLInputElement).value,
-         arrLength = value;
+   selectLength.addEventListener('change', (evt: Event) => {
+      evt.stopPropagation();
 
-      tableArea.selectTableSize(arrLength);
+      tableArea.selectTableSize((evt.target as HTMLInputElement).value);
    });
 })();

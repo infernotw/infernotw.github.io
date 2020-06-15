@@ -1,3 +1,8 @@
+export interface IOptions {
+   url: string;
+   countAtPage: string;
+}
+
 export interface IConsts {
    url: string;
    urlJson: string;
@@ -5,6 +10,7 @@ export interface IConsts {
    rubles: string;
    searchLetter: number;
    enterKeycode: number;
+   countAtPage: string;
 }
 
 export interface IJsonElem {
